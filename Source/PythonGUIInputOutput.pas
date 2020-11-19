@@ -45,12 +45,27 @@ unit PythonGUIInputOutput;
 
 interface
 
+{$DEFINE HAS_VCL}
+{$IF DECLARED(FireMonkeyVersion) AND (FireMonkeyVersion >= 16)}
+  {$UNDEF HAS_VCL}
+  {$DEFINE HAS_FMX}
+{$IFEND}
+
 uses
 {$IFDEF MSWINDOWS}
   Windows, Messages,
 {$ENDIF}
-  SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, PythonEngine;
+  SysUtils, Classes, 
+{$IFDEF HAS_FMX}
+  Fmx.Graphics, Fmx.Controls, Fmx.Forms, Fmx.Dialogs,
+  Fmx.StdCtrls,
+{$ENDIF}
+{$IFDEF HAS_VCL}
+  vcl.Graphics, vcl.Controls, vcl.Forms, vcl.Dialogs,
+  vcl.StdCtrls,
+{$ENDIF}
+
+  PythonEngine;
 
 {$IFDEF MSWINDOWS}
 const
